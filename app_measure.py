@@ -3,6 +3,7 @@ import bme280
 import time
 import datetime
 import requests
+from app import Measurements, db
 
 # connecting sensor
 port = 1
@@ -31,9 +32,19 @@ def collect_data():
     else:
         print("ERROR 404")
 
-    humidity = data.humidity
+    # humidity = data.humidity
     # pressure = data.pressure
-    temperature = data.temperature
+    # temperature = data.temperature
+
+    measurement = Measurements(DATE=datetime.datetime.now().strftime('%Y-%m-%d'),
+                               TIME=datetime.datetime.now().strftime('%H:%M:%S'),
+                               SENSOR_TEMP="{0:0.1f}".format(data.temperature),
+                               SENSOR_HUM="{0:0.0f}".format(data.humidity),
+                               LIVE_TEMP="{0:0.1f}".format(temp_api),
+                               LIVE_HUM="{0:0.0f}".format(hum_api),
+                               )
+    db.session.add(measurement)
+    db.session.commit()
 
     time.sleep(30)
 

@@ -4,16 +4,9 @@
 {% block content %}
 
 <ul>
-    {% for task in tasks %}
-        <li class="list-group-item">{{ task.name }}</li>
+    {% for data in measurements %}
+        <li class="list-group-item">{{ data.DATE }}</li>
     {% endfor %}
 </ul>
-
-<form action="" method="post">
-    <div class="input-group">
-        <input type="text" name="task" class="form-control">
-        <input type="submit" value="add">
-    </div>
-</form>
 
 {% endblock %}
